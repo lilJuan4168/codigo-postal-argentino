@@ -1,4 +1,7 @@
 scrapy
 pandas
 pyarrow
-pymongo
+pymongo==4.1.1
+fastapi==0.100.1
+uvicorn==0.23.1
+
