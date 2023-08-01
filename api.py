@@ -26,7 +26,7 @@ def cpa_localidad_lista(provincia:str, localidad:str):
        return list(x['data'])
 
 #returns a list of dictionaries containing the data of an specific file or a list
-@app.get("/{provincia}/{localidad}/{calle_avenida}/{desde}")
+@app.get("/{provincia}/{localidad}/{calle_avenida}/{desde}/{hasta}")
 def cpa_especifico(provincia:str, localidad:str, calle_avenida:str, desde:int, hasta:int):
  
     x = db[provincia].find_one({"$and": [
