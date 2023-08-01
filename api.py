@@ -8,38 +8,49 @@ with open('credentials.json', 'r') as cred:
 
 username = credentials['username']
 password = credentials['password']
-
-client = pymongo.MongoClient(f"mongodb+srv://{username}:{password}@cluster-palta-cpa.nyymbgr.mongodb.net/")
+uri = f"mongodb+srv://{username}:{password}@cluster-palta-cpa.nyymbgr.mongodb.net/" 
+client = pymongo.MongoClient(uri)
 #client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
 db = client['codigoPostalArgentino']
 
 #fastAPI instance
 app = FastAPI()
 
-
 #returns a list of dictionaries containing data from all "calle_avenida" in a province, locality
 @app.get("/{provincia}/{localidad}")
 def cpa_localidad_lista(provincia:str, localidad:str):
     x = db[provincia].find_one({'localidad':localidad})
-    return list(x['data'])
+    if x is None:
+        return "not found"
+    else:
+       return list(x['data'])
 
-#returns a dictionary containing the data of an specific file
+#returns a list of dictionaries containing the data of an specific file or a list
 @app.get("/{provincia}/{localidad}/{calle_avenida}/{desde}")
-def cpa_especifico(provincia:str, localidad:str, calle_avenida:str, desde:int):
+def cpa_especifico(provincia:str, localidad:str, calle_avenida:str, desde:int, hasta:int):
+ 
     x = db[provincia].find_one({"$and": [
         {"localidad": localidad},
         {"data": {
                 "$elemMatch": {
                     "calle_avenida": calle_avenida,
-                    "desde": desde }}}]}, 
+                    "desde": desde,
+                    "hasta": hasta}}}]}, 
                     {"data.$": 1})
-    return x['data'][0]
+    if x is None:
+       return "not found"
+    else:
+       return x['data']
 
 #returns a dictionary containing data give a certain "cpa"
 @app.get("/{cpa}")
 def data_cpa(cpa:str):
     for prov in db.list_collection_names():
         x = db['tucuman'].find_one({"data": {
-                "$elemMatch": {"cpa":"T4174ADA"}}}, {'data.$':1})
-    return x['data'][0]
+                "$elemMatch": {"cpa":cpa}}}, {'data.$':1})
+    if x is None:
+        return "not found"
+    else:
+        return x['data'][0]
+        
 
