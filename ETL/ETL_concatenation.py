@@ -14,4 +14,8 @@ result = result.drop(["id"], axis=1)
 result = result.sort_values(by='Provincia')
 result = result.reset_index(drop=True)
 
+result['id'] = 0
+result = result.drop_duplicates()
+result['id'] = range(len(result))
+
 result.to_csv("../data/cpa_data.csv", index_label="id")

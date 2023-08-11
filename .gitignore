@@ -8,3 +8,4 @@ credentials.json
 .venv
 test.ipynb
 data/CPA_data_converted.csv
+database_loaders/functions/__pycache__
