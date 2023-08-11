@@ -1,29 +1,40 @@
 import pymongo
 import pandas as pd
 import json
+from tqdm import tqdm
+from functions.reference_functions import *
 
-
-with open('credentials.json', 'r') as cred:
+with open('../credentials.json', 'r') as cred:
     credentials = json.load(cred)
 
 username = credentials['username']
 password = credentials['password']
 
-#connection with mongodb
+#connection with mongodb -------------------------------------------
 #client = pymongo.MongoClient(f"mongodb+srv://{username}:{password}@cluster-palta-cpa.nyymbgr.mongodb.net/")
 client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
+print("---> Mongo client connected")
+#create database connection
+db = client['codigoPostalArgentino_v3']
 
+#load main datafile
 data = pd.read_csv("../data/CPA_data_converted.csv")
+print("---> CSV load completed")
 
-db = client['codigoPostalArgentino']
+#localities ---------------------------------------------------------                  
+localities_loader(data, db)
 
-collection = db['localities']
-collection.insert_one({
-    "id": data['id'],
-    "name": data['Localidad'],
-    "zip": data['cpa'],
-    "sate": data['Provincia']
-})
+#data filtering for streets
+data = data[~data["calle_avenida"].isnull()]
+data['street_id'] = range(len(data))
 
-collection = db['streets']
-collection.insert_one()
+#streets ---------------------------------------------------------
+street_loader(data, db)
+
+#numbers ---------------------------------------------------------
+numbers_loader(data, db)
+
+print("---> Load completed")
+
+
+
