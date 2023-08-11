@@ -4,4 +4,7 @@ pyarrow
 pymongo==4.1.1
 fastapi==0.100.1
 uvicorn==0.23.1
-
+pymongo==4.1.1
+fastapi==0.100.1
+uvicorn==0.23.1
+pymongo[srv]

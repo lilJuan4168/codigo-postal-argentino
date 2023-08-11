@@ -1,6 +1,10 @@
-CodigoPostal/CPA/__pycache__
-CodigoPostal/CPA/spiders/__pycache__
+scraper/CodigoPostal/__pycache__
+scraper/CodigoPostal/spiders/__pycache__
 test2.ipynb
 codigosCPA.csv
 test_db.ipynb
 __pycache__
+credentials.json
+.venv
+test.ipynb
+data/CPA_data_converted.csv
