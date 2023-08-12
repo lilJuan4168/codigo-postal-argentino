@@ -6,12 +6,12 @@ from time import sleep
 with open('credentials.json', 'r') as cred:
     credentials = json.load(cred)
 
-username = credentials['username']
-password = credentials['password']
+uri = credentials['uri']
+
 
 #connection with mongodb
 #client = pymongo.MongoClient(f"mongodb+srv://{username}:{password}@cluster-palta-cpa.nyymbgr.mongodb.net/")
-client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
+client = pymongo.MongoClient(uri)
 
 db = client['codigoPostalArgentino']
 collection = db['cpa']

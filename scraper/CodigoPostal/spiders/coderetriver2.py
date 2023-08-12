@@ -1,6 +1,9 @@
 import scrapy
 import pandas as pd
 
+
+#run after coderetriver1 spider and ETL_coderetriver1.py script
+
 class Coderetriver2Spider(scrapy.Spider):
     name = "coderetriver2"
     allowed_domains = ["codigo-postal.co"]

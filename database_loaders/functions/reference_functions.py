@@ -42,7 +42,7 @@ def street_loader(data_street, db):
     for item in tqdm(unknown_type):
         collection.insert_one({
                   "id": item['street_id'],
-                  "type": "unknow",
+                  "type": "unknown",
                   "name": item['calle_avenida'],
                   "reference": item['calle_avenida'],
                   "localityId": item['id'],
