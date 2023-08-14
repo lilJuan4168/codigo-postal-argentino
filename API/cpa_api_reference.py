@@ -3,13 +3,12 @@ import pymongo
 import json
 from bson.json_util import dumps, loads
 #pymongo connection
-with open('../credentials.json', 'r') as cred:
+with open('credentials.json', 'r') as cred:
     credentials = json.load(cred)
 
 uri = credentials['uri']
  
 client = pymongo.MongoClient(uri)
-#client = pymongo.MongoClient('mongodb://127.0.0.1:27017/')
 db = client['codigoPostalArgentino_v3']
 
 #fastAPI instance
