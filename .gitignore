@@ -5,7 +5,7 @@ codigosCPA.csv
 test_db.ipynb
 __pycache__
 credentials.json
-.venv
+venv
 test.ipynb
 data/CPA_data_converted.csv
 database_loaders/functions/__pycache__

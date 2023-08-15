@@ -1,13 +1,13 @@
 
-FROM python:3.11.3
+FROM ubuntu
 
 #work directory
 WORKDIR /codigoPostal
 
 #install dependencies
-COPY requirements2.txt api.py credentials.json /codigoPostal/
-RUN pip install --upgrade pip ; pip install -r requirements2.txt
-
+COPY . .
+RUN apt update -y && apt upgrade -y && apt install python3-pip -y
+RUN pip install -r requirements2.txt
 
 #run
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["bash_scripts/api_activate.sh"]

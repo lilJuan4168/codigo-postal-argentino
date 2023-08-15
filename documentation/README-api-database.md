@@ -2,7 +2,7 @@
 <h2>Local</h2>
 <pre>
 docker build -t apicpa .
-dokcer run --name apicpac -p 8000:8000 apicpa
+docker run --name apicpac -p 8000:8000 apicpa
 </pre>
 
 <pre>

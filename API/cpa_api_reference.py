@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 import pymongo
 import json
-from bson.json_util import dumps, loads
+from bson import json_util 
+
 #pymongo connection
-with open('credentials.json', 'r') as cred:
+with open('../credentials.json', 'r') as cred:
     credentials = json.load(cred)
 
 uri = credentials['uri']
@@ -14,10 +15,15 @@ db = client['codigoPostalArgentino_v3']
 #fastAPI instance
 app = FastAPI()
 
-#returns a list of dictionaries containing data from all "calle_avenida" in a province, locality
+
+@app.get("/")
+def root():
+        return {"codigoPostalArgentino":1}
+
+
 @app.get("/{provincia}/{localidad}")
 async def cpa_localidad(provincia:str, localidad:str):
-          x = dumps(db["localities"].find({
+          x = json_util.dumps(db["localities"].find({
             "state": provincia, "name": localidad}, 
            {
              "name":1,"state":1,"zip":1, "id":1, "_id":0}
@@ -27,7 +33,7 @@ async def cpa_localidad(provincia:str, localidad:str):
 
 @app.get("/{provincia}/{localidad}/{calle_avenida}/{desde}/{hasta}")
 async def cpa_especifico(provincia:str, localidad:str, calle_avenida:str, desde:int, hasta:int): 
-          x = dumps(db['streets'].aggregate([
+          x = json_util.dumps(db['streets'].aggregate([
                   {"$match":{"name": calle_avenida}},
                   {"$lookup":{
                           "from": "localities",
@@ -62,7 +68,7 @@ async def cpa_especifico(provincia:str, localidad:str, calle_avenida:str, desde:
 
 @app.get("/{cpa}")
 async def data_cpa(cpa:str):
-          x = dumps(db['numbers'].aggregate([
+          x = json_util.dumps(db['numbers'].aggregate([
                  {"$match": {"zip": cpa}},
                  {"$lookup": {
                         "from": "streets",
