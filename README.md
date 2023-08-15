@@ -45,7 +45,7 @@ python3 ETL_parquet_to_csv_conversor.py
 </pre>
 
 <h2>Base de datos</h2>
-<p>La base de datos usada es mongodb, se diseñaron 3 formas de estructuracion de archivos, directa, embeded y por referencia, siendo por referencia la arquitectura pedida.<br>Para cargar los archivos en mongodb se tiene que llenar la variable -uri- en <b>credentials.json</b> y despues seguir los siguientes pasos. </p>
+<p>La base de datos usada es mongodb, se diseñaron 3 formas de estructuracion de archivos, directa, embeded y por referencia, siendo por referencia la arquitectura pedida.<br>Para cargar los archivos en mongodb se tiene que llenar la variable -uri- en <b>credentials.json</b> y despues seguir los siguientes pasos. <br> Para mas detalles de la estructura de la base de datos <a href="./documentation/README-api-database.md">README-api-database</a></p>
 
 <pre>
 #1 Asegurarse de tener el archivo CPA_data_converted.csv en la carpeta data/
@@ -58,3 +58,13 @@ python3 csv_mongo_loader_reference.py
 
 <h2>API</h2>
 
+<p>La api fue hecha con fast api y se encuentra en API/cpa_api_reference.py, puede ser ejecutada de dos maneras.</p>
+<pre>
+#1
+cd API
+python3 cpa_api_reference.py
+#2 (linux)
+bash_scripts/api_activate.sh
+</pre>
+
+<p align='center'><img src="documentation/img/api_docs.png" width=800 length=1600></p>
